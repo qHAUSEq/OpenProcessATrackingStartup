@@ -1,0 +1,3 @@
+Skype.exe
+notepad.exe
+mspaint.exe
