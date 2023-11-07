@@ -1,3 +1,4 @@
 Skype.exe
 notepad.exe
 mspaint.exe
+CalculatorApp.exe
