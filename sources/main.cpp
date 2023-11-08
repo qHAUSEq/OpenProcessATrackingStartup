@@ -6,7 +6,7 @@
 #include <mutex>
 #include <Windows.h>
 #include <tlhelp32.h>
-#include <conio.h>
+#include <conio.h> // Отслеживание нажатия клавиши
 
 std::mutex mtx;
 
@@ -71,13 +71,13 @@ int main()
 		{
 			th_vec.push_back(std::thread(startProc, vecNameOfProgs[i])); // Добавляем в вектор потоков кол-во потоков = кол-ву открытых программ
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+		std::this_thread::sleep_for(std::chrono::milliseconds(3000)); // Останавливаем основной поток на 3 сек, чтобы посмотреть активновсть процесса
 		system("cls");
 		for (size_t i = 0; i < vecNameOfProgs.size(); ++i)
 		{
-			th_vec.at(i).detach();
+			th_vec.at(i).detach(); // отсоединяем поток от объекта. Не вызывает деструктор ~thread()
 		}
-		th_vec.clear();
+		th_vec.clear(); // Очистка вектора с потоками, для вызова деструктора ~thread(), чтобы не создавать бесконечное количество потоков
 	} while (GetAsyncKeyState(VK_ESCAPE) == 0); // нажать esc, чтобы завершить проверку
 
 	for (int i = 0; i < vecNameOfProgs.size(); ++i)
